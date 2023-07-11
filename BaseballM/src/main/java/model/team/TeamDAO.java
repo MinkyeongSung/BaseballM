@@ -46,7 +46,7 @@ public class TeamDAO {
         List<TeamRespDTO> teamList = new ArrayList<>();
 
         try {
-            String sql = "SELECT t.name AS team_name, s.name AS stadium_name " +
+            String sql = "SELECT t.name AS team_name, s.name AS stadium_name, t.created_at AS team_created_at " +
                     "FROM team t " +
                     "JOIN stadium s ON t.stadium_idx = s.idx";
 
@@ -56,10 +56,12 @@ public class TeamDAO {
             while (resultSet.next()) {
                 String teamName = resultSet.getString("team_name");
                 String stadium = resultSet.getString("stadium_name");
+                Timestamp teamCreatedAt = resultSet.getTimestamp("team_created_at");
 
-                TeamRespDTO teamRespDTO = new TeamRespDTO(teamName, stadium);
-                teamRespDTO.setTeamName(teamName);
-                teamRespDTO.setStadium(stadium);
+
+                TeamRespDTO teamRespDTO = new TeamRespDTO(teamName, stadium, teamCreatedAt);
+//                teamRespDTO.setTeamName(teamName);
+//                teamRespDTO.setStadium(stadium);
 
                 teamList.add(teamRespDTO);
             }
