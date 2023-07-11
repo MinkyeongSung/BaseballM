@@ -23,7 +23,6 @@ public class BaseballAPP {
             System.out.printf("팀 이름 : " + team.getTeamName());
             System.out.printf("(" + team.getStadium()+")");
             System.out.println(team.getTeamCreatedAt());
-            // 필요한 다른 필드도 출력 가능
         }
 
 

@@ -60,8 +60,7 @@ public class TeamDAO {
 
 
                 TeamRespDTO teamRespDTO = new TeamRespDTO(teamName, stadium, teamCreatedAt);
-//                teamRespDTO.setTeamName(teamName);
-//                teamRespDTO.setStadium(stadium);
+
 
                 teamList.add(teamRespDTO);
             }
