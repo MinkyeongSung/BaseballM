@@ -25,15 +25,27 @@ public class PlayerDAO {
         return null;
     }
     public void playerUpdate(int playerIdx)throws SQLException{
-        String sql = "update player set player_team_idx = null where player_idx = ?";
+        String sql = "update player set team_idx = null where idx = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql);){
             statement.setInt(1,playerIdx);
             statement.executeUpdate();
             System.out.println("업데이트 성공");
         }
     }
+//    public Player playerFindMyId(int player) throws SQLException {
+//        String query = "SELECT * FROM account_tb WHERE account_number = ?";
+//        try (PreparedStatement statement = connection.prepareStatement(query)) {
+//            statement.setInt(1, accountNumber);
+//            try (ResultSet rs = statement.executeQuery()) {
+//                if (rs.next()) {
+//                    return buildAccountFromResultSet(rs);
+//                }
+//            }
+//        }
+//        return null; // Account not found
+//    }
 
-    public List<Player> playerByTeamId(int playerTeamIdx) throws SQLException {
+    public List<Player> playerFindByTeamId(int playerTeamIdx) throws SQLException {
         List<Player> players = new ArrayList<>();
         String query = "select s.name,t.name,p.* from player p inner join team t on p.team_idx = t.idx inner join stadium s on t.idx = s.idx;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
