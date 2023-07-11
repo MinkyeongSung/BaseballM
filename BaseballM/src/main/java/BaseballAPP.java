@@ -16,7 +16,7 @@ public class BaseballAPP {
         StadiumDAO stadiumDAO = new StadiumDAO(connection);
         TeamDAO teamDAO = new TeamDAO(connection);
 
-        // 팀 등록
+        // 팀 등록.
         try {
             Scanner stadiumidx = new Scanner(System.in);
             System.out.printf("스타디움 번호 : ");
