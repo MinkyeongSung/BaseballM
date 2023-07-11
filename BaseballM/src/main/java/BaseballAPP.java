@@ -1,5 +1,7 @@
 import db.DBConnection;
+
 import dto.TeamRespDTO;
+
 import model.stadium.Stadium;
 import model.stadium.StadiumDAO;
 import model.team.TeamDAO;
@@ -16,6 +18,7 @@ public class BaseballAPP {
 
         StadiumDAO stadiumDAO = new StadiumDAO(connection);
         TeamDAO teamDAO = new TeamDAO(connection);
+
 
         List<TeamRespDTO> teamList = teamDAO.getTeamList();
 
@@ -45,6 +48,24 @@ public class BaseballAPP {
 
 
 
+
+
+
+        // 팀 등록.
+        try {
+            Scanner stadiumidx = new Scanner(System.in);
+            System.out.printf("스타디움 번호 : ");
+            int stadiumIdx = stadiumidx.nextInt();
+            Scanner teamname = new Scanner(System.in);
+            System.out.printf("팀 이름 : ");
+            String teamName = teamname.nextLine();
+
+            teamDAO.createTeam(stadiumIdx,teamName);
+            System.out.println("성공");
+        } catch (SQLException e) {
+            System.out.println("실패");
+            e.printStackTrace();
+        }
 
 
 //        // 야구장 생성

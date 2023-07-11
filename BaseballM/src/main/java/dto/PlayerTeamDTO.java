@@ -1,5 +1,6 @@
 package dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +14,11 @@ import java.util.List;
 public class PlayerTeamDTO {
     private Team team;
     private List<Player> players = new ArrayList<>();
+
+import model.player.Player;
+
+public class PlayerTeamDTO {
+    private Player player;
+
 
 }

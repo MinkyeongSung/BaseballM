@@ -1,5 +1,6 @@
 package dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,5 +19,7 @@ public class TeamRespDTO {
     private Timestamp teamCreatedAt;
 
 
+
+public class TeamRespDTO {
 
 }

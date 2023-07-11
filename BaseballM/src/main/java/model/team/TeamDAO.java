@@ -1,10 +1,16 @@
 package model.team;
 
+
 import dto.TeamRespDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 
 /*
 stadium_id (int)
@@ -19,6 +25,7 @@ public class TeamDAO {
     public TeamDAO(Connection connection) {
         this.connection = connection;
     }
+
 
     /*
     3.3 팀 등록
@@ -71,5 +78,23 @@ public class TeamDAO {
         return teamList;
     }
 
+  
+/*
+3.3 팀 등록
+요청 : 팀등록?stadiumId=1&name=NC
+응답 : 성공이라는 메시지를 출력한다.
+ */
+public void createTeam(int stadiumIdx, String teamName) throws SQLException {
+    String query = "INSERT INTO team (stadium_idx ,name, created_at) VALUES (?, ?, now())";
+
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setInt(1, stadiumIdx);
+        statement.setString(2, teamName);
+
+        int result = statement.executeUpdate();
+        System.out.println("결과 : "+ result);
+    }
+
+}
 
 }

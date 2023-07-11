@@ -2,6 +2,10 @@ package model.outplayer;
 
 import lombok.Getter;
 
+
+import model.player.Player;
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +15,13 @@ public class OutPlayerDAO {
     private Connection connection;
 
 
+
+    private PreparedStatement statement;
+
     public OutPlayerDAO(Connection connection){
         this.connection = connection;
     }
+
     public OutPlayer outplayerInsert(int outplayerPlayerIdx, String outplayerReason) throws SQLException {
         String sql = "INSERT INTO out_player (player_id, reason, created_at) VALUES (?, ?, now())";
         try (PreparedStatement statement = connection.prepareStatement(sql);){
@@ -26,6 +34,16 @@ public class OutPlayerDAO {
             System.out.println("입력 실패");
         }
         return null;
+
+      
+    public void outplayerInsert(int outplayerPlayerIdx,String outplayerReason) throws SQLException {
+        String sql = "INSERT INTO player (player_idx, reason, created_at) VALUES (?, ?, ?, now())";
+        statement = connection.prepareStatement(sql);
+        statement.setInt(1,outplayerPlayerIdx);
+        statement.setString(2,outplayerReason);
+        statement.executeUpdate();
+        System.out.println("입력 성공");
+
     }
 
     public List<OutPlayer> outplayerFindByAll() throws SQLException {
