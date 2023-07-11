@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-public class BaseballAPP {
-}
-=======
 import db.DBConnection;
 import model.stadium.Stadium;
 import model.stadium.StadiumDAO;
@@ -36,8 +32,6 @@ public class BaseballAPP {
             e.printStackTrace();
         }
 
-
-
 //        // 야구장 생성
 //        try {
 //            Scanner scanner = new Scanner(System.in);
@@ -58,10 +52,6 @@ public class BaseballAPP {
 //            }
 //        }
 
-
-
-
-
 // 전체 야구장 목록보기
 //        try {
 //            List<Stadium> stadiums = stadiumDAO.getAllStadiums();
@@ -78,18 +68,8 @@ public class BaseballAPP {
 //            e.printStackTrace();
 //        }
 
-
     }
 }
-
-
-
-
-
-
-
-
-
 
 /*
 BaseBallApp 생성
@@ -123,4 +103,3 @@ PlayerService의 선수등록() 메서드에서 해당 값을 받아서 PlayerDa
 값이 DB에 잘 들어갔다면, 결과가 1로 리턴될 것이다. 1이 리턴되면 Console에 성공이라는 메시지를 출
 력한다.
  */
->>>>>>> SMK
