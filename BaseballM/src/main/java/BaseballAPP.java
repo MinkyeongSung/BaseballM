@@ -1,8 +1,11 @@
 import db.DBConnection;
+import model.stadium.Stadium;
 import model.stadium.StadiumDAO;
+import model.team.TeamDAO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class BaseballAPP {
@@ -11,25 +14,68 @@ public class BaseballAPP {
         Connection connection = DBConnection.getInstance();
 
         StadiumDAO stadiumDAO = new StadiumDAO(connection);
+        TeamDAO teamDAO = new TeamDAO(connection);
 
-        // 전체 야구장 목록보기
-
-
-
-        // 야구장 생성
+        // 팀 등록
         try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.printf("야구장 이름 : ");
-            String stadiumName = scanner.nextLine();
+            Scanner stadiumidx = new Scanner(System.in);
+            System.out.printf("스타디움 번호 : ");
+            int stadiumIdx = stadiumidx.nextInt();
+            Scanner teamname = new Scanner(System.in);
+            System.out.printf("팀 이름 : ");
+            String teamName = teamname.nextLine();
 
-            stadiumDAO.createStadium(stadiumName);
+            teamDAO.createTeam(stadiumIdx,teamName);
             System.out.println("성공");
         } catch (SQLException e) {
             System.out.println("실패");
             e.printStackTrace();
         }
-    }
 
+
+
+//        // 야구장 생성
+//        try {
+//            Scanner scanner = new Scanner(System.in);
+//            System.out.printf("야구장 이름 : ");
+//            String stadiumName = scanner.nextLine();
+//
+//            stadiumDAO.createStadium(stadiumName);
+//            System.out.println("성공");
+//        } catch (SQLException e) {
+//            System.out.println("실패");
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                connection.setAutoCommit(true);
+//                System.out.println("커밋");
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+
+
+
+
+
+// 전체 야구장 목록보기
+//        try {
+//            List<Stadium> stadiums = stadiumDAO.getAllStadiums();
+//
+//                System.out.println("등록된 야구장 목록:");
+//                for (Stadium stadium : stadiums) {
+//                    System.out.println("야구장 이름: " + stadium.getStadiumName());
+//                    System.out.println("등록일시: " + stadium.getStadiumCreatedAt());
+//                    System.out.println("-------------------------");
+//
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("야구장 목록 조회 중 오류가 발생했습니다.");
+//            e.printStackTrace();
+//        }
+
+
+    }
 }
 
 
@@ -46,8 +92,10 @@ BaseBallApp 생성
 콘솔 예시!!
 1. 콘솔에 출력되는 질문
 어떤 기능을 요청하시겠습니까?
+
 2. 클라이언트가 입력하는 내용
 선수등록?teamId=1&name=이대호&position=1루수
+
 3. main 메서드에서 할 일
 id (PK, 자동 번호 증가)
 team_id (int)
