@@ -1,5 +1,10 @@
 import db.DBConnection;
 import dto.TeamRespDTO;
+import model.outplayer.OutPlayer;
+import model.outplayer.OutPlayerDAO;
+import model.player.Player;
+import model.player.PlayerDAO;
+import model.service.Service;
 import model.stadium.Stadium;
 import model.stadium.StadiumDAO;
 import model.team.TeamDAO;
@@ -16,16 +21,80 @@ public class BaseballAPP {
 
         StadiumDAO stadiumDAO = new StadiumDAO(connection);
         TeamDAO teamDAO = new TeamDAO(connection);
+        PlayerDAO playerDAO = new PlayerDAO(connection);
+        OutPlayerDAO outPlayerDAO = new OutPlayerDAO(connection);
+//
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("어떤 기능을 요청하시겠습니까?");
+//        String input = scanner.nextLine();
+//
+//        Service service = new Service();
+//        String result = service.processInput(input);
+//
+//        System.out.println(result);
 
-        List<TeamRespDTO> teamList = teamDAO.getTeamList();
 
-        for (TeamRespDTO team : teamList) {
-            System.out.printf("팀 이름 : " + team.getTeamName());
+
+
+
+//        try {
+//            int playerIdx = 3;
+//            // 아웃플레이어 인서트 플레이어 업데이트 성공
+//            OutPlayer outPlayer = outPlayerDAO.outplayerInsert(playerIdx,"음주");
+//            playerDAO.playerUpdate(playerIdx);
+//
+//
+//            // 데이터 삽입
+//            Player player = playerDAO.playerInsert(2,"한화","내야수");
+//
+//            // 전체 데이터 불러오기
+//            List<Player> player = playerDAO.playerFindByAll();
+//            for (int i = 0; i < player.size(); i++) {
+//                System.out.println(player.get(i));
+//            }
+//
+//            // 팀번호로 전체 불러오기
+//            List<Player> players = playerDAO.playerFindByTeamId()
+//
+//
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+
+
+//        // 팀 목록 불러오기
+//        List<TeamRespDTO> teamList = teamDAO.getTeamList();
+//
+//        for (TeamRespDTO team : teamList) {
+//            System.out.printf("팀 이름 : " + team.getTeamName());
+//            System.out.printf("(" + team.getStadium()+")");
+//            System.out.println(team.getTeamCreatedAt());
+//        }
+
+
+
+
+        // 팀 하나만 불러오기
+                // 팀 목록 불러오기
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("팀 번호를 입력하세요: ");
+        int teamId = scanner.nextInt();
+
+        TeamRespDTO team = teamDAO.getTeam(teamId);
+
+        if (team != null) {
+            System.out.printf("팀 이름: " + team.getTeamName());
             System.out.printf("(" + team.getStadium()+")");
-            System.out.println(team.getTeamCreatedAt());
+            System.out.println(" " + team.getTeamCreatedAt());
+            System.out.println("-------------------------------");
+        } else {
+            System.out.println("팀을 찾을 수 없습니다.");
         }
-
-
+    }
+}
 
 //        // 팀 등록
 //        try {
@@ -42,9 +111,6 @@ public class BaseballAPP {
 //            System.out.println("실패");
 //            e.printStackTrace();
 //        }
-
-
-
 
 
 //        // 야구장 생성
@@ -82,9 +148,9 @@ public class BaseballAPP {
 //            System.out.println("야구장 목록 조회 중 오류가 발생했습니다.");
 //            e.printStackTrace();
 //        }
-
-    }
-}
+//
+//    }
+//}
 
 /*
 BaseBallApp 생성

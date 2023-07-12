@@ -72,4 +72,35 @@ public class TeamDAO {
     }
 
 
+
+    // 팀 하나만 불러오기
+    public TeamRespDTO getTeam(int teamId) {
+        TeamRespDTO teamRespDTO = null;
+
+        try {
+            String sql = "SELECT t.name AS team_name, s.name AS stadium_name, t.created_at AS team_created_at " +
+                    "FROM team t " +
+                    "JOIN stadium s ON t.stadium_idx = s.idx " +
+                    "WHERE t.stadium_idx = ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, teamId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String teamName = resultSet.getString("team_name");
+                String stadium = resultSet.getString("stadium_name");
+                Timestamp teamCreatedAt = resultSet.getTimestamp("team_created_at");
+
+                teamRespDTO = new TeamRespDTO(teamName, stadium, teamCreatedAt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return teamRespDTO;
+    }
+
+
+
 }
