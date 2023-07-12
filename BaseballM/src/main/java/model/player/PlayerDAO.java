@@ -1,5 +1,7 @@
 package model.player;
 
+import dto.PlayerTeamDTO;
+import dto.PositionResDTO;
 import lombok.Getter;
 
 import java.sql.*;
@@ -25,39 +27,39 @@ public class PlayerDAO {
         return null;
     }
     public void playerUpdate(int playerIdx)throws SQLException{
+
         String sql = "update player set team_idx = null where idx = ?";
+
         try (PreparedStatement statement = connection.prepareStatement(sql);){
             statement.setInt(1,playerIdx);
             statement.executeUpdate();
             System.out.println("업데이트 성공");
         }
     }
-//    public Player playerFindMyId(int player) throws SQLException {
-//        String query = "SELECT * FROM account_tb WHERE account_number = ?";
-//        try (PreparedStatement statement = connection.prepareStatement(query)) {
-//            statement.setInt(1, accountNumber);
-//            try (ResultSet rs = statement.executeQuery()) {
-//                if (rs.next()) {
-//                    return buildAccountFromResultSet(rs);
-//                }
-//            }
-//        }
-//        return null; // Account not found
-//    }
 
-    public List<Player> playerFindByTeamId(int playerTeamIdx) throws SQLException {
-        List<Player> players = new ArrayList<>();
-        String query = "select s.name,t.name,p.* from player p inner join team t on p.team_idx = t.idx inner join stadium s on t.idx = s.idx;";
+
+    public List<PlayerTeamDTO> playerFindByTeamId(int playerTeamIdx) throws SQLException {
+
+        List<PlayerTeamDTO> dtos = new ArrayList<>();
+        String query = "select s.name , t.name, p.*  from player p left outer join team t on p.team_idx = t.idx left outer join stadium s on t.stadium_idx = s.idx where team_idx = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, playerTeamIdx);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    Player player = buildPlayerFromResultSet(rs);
-                    players.add(player);
+                    PlayerTeamDTO dto = PlayerTeamDTO.builder()
+                            .pidx(rs.getInt("idx"))
+                            .tidx(rs.getInt("team_idx"))
+                            .playerName(rs.getString("p.name"))
+                            .position(rs.getString("position"))
+                            .createdAt(rs.getTimestamp("p.created_at"))
+                            .teamName(rs.getString("t.name"))
+                            .stadiumName(rs.getString("s.name"))
+                            .build();
+                    dtos.add(dto);
                 }
             }
         }
-        return players; // Account not found
+        return dtos; // Account not found
     }
 
     public List<Player> playerFindByAll() throws SQLException {
@@ -72,6 +74,31 @@ public class PlayerDAO {
             }
         }
         return players;
+    }
+
+    public List<PositionResDTO> positionList() throws SQLException {
+        List<PositionResDTO> dtos = new ArrayList<>();
+        String query = "select\n" +
+                "    position,\n" +
+                "    max(if(team_idx =1,name,null)) 'lotte',\n" +
+                "    max(if(team_idx =2,name,null)) 'hanhwa',\n" +
+                "    max(if(team_idx =3,name,null)) 'samsung'\n" +
+                "from player p\n" +
+                "group by position;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    PositionResDTO dto = PositionResDTO.builder()
+                            .playerName1(rs.getString("lotte"))
+                            .playerName2(rs.getString("hanhwa"))
+                            .playerName3(rs.getString("samsung"))
+                            .position(rs.getString("position"))
+                            .build();
+                    dtos.add(dto);
+                }
+            }
+        }
+        return dtos; // Account not found
     }
 
     private Player buildPlayerFromResultSet(ResultSet resultSet) throws SQLException {

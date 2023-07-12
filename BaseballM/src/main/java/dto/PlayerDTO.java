@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter @Setter @AllArgsConstructor
 public class PlayerDTO {
-//    private List<Player> players = new ArrayList<>();
+    //    private List<Player> players = new ArrayList<>();
     private Integer playerIdx;
     private Integer playerTeamIdx;
 
