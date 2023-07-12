@@ -1,5 +1,6 @@
 package model.stadium;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.sql.*;
