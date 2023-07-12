@@ -59,7 +59,7 @@ public class TeamDAO {
                 Timestamp teamCreatedAt = resultSet.getTimestamp("team_created_at");
 
 
-                TeamRespDTO teamRespDTO = new TeamRespDTO(teamName, stadium, teamCreatedAt);
+                TeamRespDTO teamRespDTO = new TeamRespDTO(teamName, stadium, teamCreatedAt, 0);
 
 
                 teamList.add(teamRespDTO);
@@ -92,7 +92,7 @@ public class TeamDAO {
                 String stadium = resultSet.getString("stadium_name");
                 Timestamp teamCreatedAt = resultSet.getTimestamp("team_created_at");
 
-                teamRespDTO = new TeamRespDTO(teamName, stadium, teamCreatedAt);
+                teamRespDTO = new TeamRespDTO(teamName, stadium, teamCreatedAt, teamId);
             }
         } catch (SQLException e) {
             e.printStackTrace();

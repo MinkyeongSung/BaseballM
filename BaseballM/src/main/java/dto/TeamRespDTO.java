@@ -16,7 +16,7 @@ public class TeamRespDTO {
     private String teamName;
     private String stadium;
     private Timestamp teamCreatedAt;
-
+    private Int teamIdx;
 
 
 }
