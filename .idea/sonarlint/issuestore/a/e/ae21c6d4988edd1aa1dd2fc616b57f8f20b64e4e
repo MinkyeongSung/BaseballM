@@ -1,0 +1,31 @@
+
+0
+java:S1220""Move this file to a named package.
+P
+java:S1481""3Remove this unused "baseBallDriver" local variable.(ÛĞĞ8úµçı”1
+Z	java:S106$"9Replace this use of System.out or System.err by a logger.(âá¥£ûÿÿÿÿ8üµçı”1
+U	java:S106%"9Replace this use of System.out or System.err by a logger.(ú•€Ë8üµçı”1
+U	java:S106&"9Replace this use of System.out or System.err by a logger.(Í•ó8üµçı”1
+U	java:S106'"9Replace this use of System.out or System.err by a logger.(ÒñÓÑ8üµçı”1
+U	java:S106("9Replace this use of System.out or System.err by a logger.(ı÷›Ç8ıµçı”1
+Z	java:S106)"9Replace this use of System.out or System.err by a logger.(¬‡ËØûÿÿÿÿ8ıµçı”1
+U	java:S106+"9Replace this use of System.out or System.err by a logger.(çğ§8ıµçı”1
+]	java:S125*"<This block of commented-out lines of code should be removed.(Ä´œ•şÿÿÿÿ8ıµçı”1
+U	java:S106,"9Replace this use of System.out or System.err by a logger.(ØèØ¤8ıµçı”1
+Z	java:S106-"9Replace this use of System.out or System.err by a logger.(ìñÁ´ùÿÿÿÿ8ıµçı”1
+Z	java:S106."9Replace this use of System.out or System.err by a logger.(ŒéÈæüÿÿÿÿ8ıµçı”1
+U	java:S106/"9Replace this use of System.out or System.err by a logger.(ïÔ¯Ÿ8ıµçı”1
+U	java:S1060"9Replace this use of System.out or System.err by a logger.(” ê»8ıµçı”1
+U	java:S1061"9Replace this use of System.out or System.err by a logger.(ú•€Ë8ıµçı”1
+U	java:S106J"9Replace this use of System.out or System.err by a logger.(ˆ¸Õ½8¶çı”1
+U	java:S106b"9Replace this use of System.out or System.err by a logger.(õßïù8ƒ¶çı”1
+Z	java:S106d"9Replace this use of System.out or System.err by a logger.(Â±ãæıÿÿÿÿ8ƒ¶çı”1
+U	java:S106|"9Replace this use of System.out or System.err by a logger.(õßïù8„¶çı”1
+Z	java:S106~"9Replace this use of System.out or System.err by a logger.(©ÁÅûÿÿÿÿ8…¶çı”1
+[	java:S106€"9Replace this use of System.out or System.err by a logger.(ù½šÖùÿÿÿÿ8…¶çı”1
+V	java:S106"9Replace this use of System.out or System.err by a logger.(õßïù8†¶çı”1
+V	java:S106 "9Replace this use of System.out or System.err by a logger.(¨ßÒç8‡¶çı”1
+V	java:S106¢"9Replace this use of System.out or System.err by a logger.(¶±‚À8‡¶çı”1
+^	java:S125Â"<This block of commented-out lines of code should be removed.(Ğ˜¡şûÿÿÿÿ8Œ¶çı”1
+ä
+java:S6541"ÆA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 127 to 64, Complexity from 27 to 14, Nesting Level from 3 to 2, Number of Variables from 31 to 6.(Çµí‘8Œ¶çı”1

@@ -1,56 +1,71 @@
 package model.service;
 
-import anno.Controller;
-import anno.RequestMapping;
+import db.DBConnection;
+import lombok.Getter;
+import lombok.Setter;
+import model.outplayer.OutPlayerDAO;
+import model.player.PlayerDAO;
+import model.stadium.Stadium;
+import model.stadium.StadiumDAO;
+import model.team.TeamDAO;
 
-import java.io.File;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 
+@Getter
+@Setter
 public class Service {
+    private Connection connection;
+    private StadiumDAO stadiumDAO;
+    private TeamDAO teamDAO;
+    private PlayerDAO playerDAO;
+    private OutPlayerDAO outPlayerDAO;
 
-    public static Set<Object> componentScan(String pkg) throws Exception {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        Set<Object> instances = new HashSet<>();
-
-        // 해당 패키지의 URL을 찾기 (프로토콜이 적용된 URL)
-        URL packageUrl = classLoader.getResource(pkg);
-
-        // 해당 패키지를 자바 파일 객체로 변환 (파일객체는 디렉토리가 될수도 있고, 파일이 될수도 있다)
-        File packageDirectory = new File(packageUrl.toURI());
-
-        // 해당 패키지내부의 모든 파일 찾아서 Set<Class>에 담기
-        for (File file : packageDirectory.listFiles()) {
-            if (file.getName().endsWith(".class")) {
-                String className = pkg + "." + file.getName().replace(".class", "");
-                Class cls = Class.forName(className);
-                if (cls.isAnnotationPresent(Controller.class)) {
-                    instances.add(cls.newInstance());
-                }
-            }
-        }
-        return instances;
+    public Service(Connection connection) {
+        this.connection = connection;
+        this.stadiumDAO = new StadiumDAO(connection);
+        this.teamDAO = new TeamDAO(connection);
+        this.playerDAO = new PlayerDAO(connection);
+        this.outPlayerDAO = new OutPlayerDAO(connection);
     }
-    public static void findUri(Set<Object> instances, String uri) throws Exception {
-        boolean isFind = false;
-        for (Object obj : instances) {
-            Method[] methods = obj.getClass().getDeclaredMethods();
 
-            for (Method mt : methods) {
-                Annotation anno = mt.getDeclaredAnnotation(RequestMapping.class);
-                RequestMapping rm = (RequestMapping) anno;
-                if (rm.uri().equals(uri)) {
-                    isFind = true;
-                    mt.invoke(obj);
-                }
-
-            }
+    public void staAdd(String stdiumName) {
+        try {
+            stadiumDAO.createStadium(stdiumName);
+            System.out.println("등록되었습니다.");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        if (isFind == false) {
-            System.out.println("404 Not Found");
+    }
+    public void teamAdd(int teamStadiumIdx,String teamName) {
+        try {
+            teamDAO.createTeam(teamStadiumIdx,teamName);
+            System.out.println("등록되었습니다.");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void playerAdd(int teamidx,String playerName,String playerPosition){
+        try {
+            playerDAO.playerInsert(teamidx,playerName,playerPosition);
+            System.out.println("등록 되었습니다");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void stadiumFindByAll(){
+        try {
+            List<Stadium> stadiums = stadiumDAO.getAllStadiums();
+            System.out.println("등록된 야구장 목록:");
+            for (Stadium stadium : stadiums) {
+                System.out.println("야구장 이름: " + stadium.getStadiumName());
+                System.out.println("등록일시: " + stadium.getStadiumCreatedAt());
+                System.out.println("-------------------------");
+            }
+        } catch (SQLException e) {
+            System.out.println("야구장 목록 조회 중 오류가 발생했습니다.");
+            e.printStackTrace();
         }
     }
 }
