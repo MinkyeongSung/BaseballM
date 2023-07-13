@@ -24,11 +24,12 @@ public class Service {
         this.teamDAO = teamDAO;
         this.playerDAO = playerDAO;
     }
+
     public Service(StadiumDAO stadiumDAO) {
         this.stadiumDAO = stadiumDAO;
     }
 
-    public int registerStadium(String name) {
+    public int registerSadium(String name) {
         try {
 
             stadiumDAO.createStadium(name);

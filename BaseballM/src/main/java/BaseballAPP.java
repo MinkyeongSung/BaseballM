@@ -25,10 +25,10 @@ public class BaseballAPP {
         PlayerDAO playerDAO = new PlayerDAO(connection);
         OutPlayerDAO outPlayerDAO = new OutPlayerDAO(connection);
 
-        StadiumService stadiumService = new StadiumService(stadiumDAO); // 2
-        TeamService teamService = new TeamService(teamDAO); // 4
-        OutPlayerService outPlayerService = new OutPlayerService(outPlayerDAO, playerDAO);  // 8
-        PlayerService playerService = new PlayerService(playerDAO);  // 9
+        StadiumService stadiumService = new StadiumService(stadiumDAO);
+        TeamService teamService = new TeamService(teamDAO);
+        OutPlayerService outPlayerService = new OutPlayerService(outPlayerDAO, playerDAO);
+        PlayerService playerService = new PlayerService(playerDAO);
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("어떤 기능을 요청하시겠습니까?");
@@ -38,7 +38,7 @@ public class BaseballAPP {
         System.out.println("3. 팀등록 (팀등록?stadiumId=팀번호&name=팀이름)");
         System.out.println("4. 팀목록");
         System.out.println("5. 선수등록 (선수등록?teamId=팀번호&name=선수이름&position=포지션)");
-        System.out.println("6. 선수목록 (선수목록?teamId=1)");
+        System.out.println("6. 선수목록 (선수목록?teamId=팀번호)");
         System.out.println("7. 선수 퇴출 등록 (퇴출등록?playerId=플레이어번호&reason=사유)");
         System.out.println("8. 퇴출목록");
         System.out.println("9. 포지션별목록");
@@ -101,14 +101,3 @@ public class BaseballAPP {
 }
 
 
-
-
-
-
-
-
-//            StadiumService stadiumService = new StadiumService(stadiumDAO); // 1
-//            TeamService teamService = new TeamService(teamDAO); // 3
-//            PlayerService playerService = new PlayerService(playerDAO);  // 5
-//            PlayerService playerService = new PlayerService(playerDAO); // 6
-//            OutPlayerService outPlayerService = new OutPlayerService(outPlayerDAO, playerDAO); //7
