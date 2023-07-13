@@ -3,11 +3,7 @@ package model.service;
 
 import dto.PlayerTeamDTO;
 import dto.PositionResDTO;
-import dto.TeamRespDTO;
 import model.player.PlayerDAO;
-import model.team.TeamDAO;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 

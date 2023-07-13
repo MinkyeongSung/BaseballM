@@ -1,8 +1,7 @@
 package model.stadium;
 
-import anno.RequestMapping;
+
 import lombok.Getter;
-import model.player.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,7 +33,6 @@ public class StadiumDAO {
     // 요청 : 야구장목록
     // 응답 : 야구장 목록은 Model -> Stadium을 List에 담아서 출력한다.
 
-    @RequestMapping(uri = "getAllStadium")
     public List<Stadium> getAllStadiums() throws SQLException {
         List<Stadium> stadiums = new ArrayList<>();
         String sql = "SELECT * FROM stadium";

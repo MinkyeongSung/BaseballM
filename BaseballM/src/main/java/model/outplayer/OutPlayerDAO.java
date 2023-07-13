@@ -2,11 +2,6 @@ package model.outplayer;
 
 import dto.OutPlayerRespDTO;
 import lombok.Getter;
-
-
-import model.player.Player;
-
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,22 +1,16 @@
 package model.service;
 
-import anno.Controller;
-import anno.RequestMapping;
-import db.DBConnection;
 import lombok.Getter;
 import lombok.Setter;
 import model.outplayer.OutPlayerDAO;
 import model.player.PlayerDAO;
-import model.stadium.Stadium;
+
 import model.stadium.StadiumDAO;
 import model.team.TeamDAO;
 
-import java.io.File;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.net.URL;
+
 import java.sql.Connection;
-import java.sql.SQLException;
+
 import java.util.*;
 
 @Getter

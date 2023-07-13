@@ -8,7 +8,6 @@ import model.service.*;
 import model.stadium.StadiumDAO;
 import model.team.TeamDAO;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
