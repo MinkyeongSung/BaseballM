@@ -100,12 +100,13 @@ public class PlayerDAO {
                 "group by position;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             try (ResultSet rs = statement.executeQuery()) {
+
                 while (rs.next()) {
                     PositionRespDTO dto = PositionRespDTO.builder()
                             .playerName1(rs.getString("롯데"))
                             .playerName2(rs.getString("LG"))
                             .playerName3(rs.getString("NC"))
-                            .position(rs.getString("포지션"))
+                            .position(rs.getString("position"))
                             .build();
                     dtos.add(dto);
                 }
