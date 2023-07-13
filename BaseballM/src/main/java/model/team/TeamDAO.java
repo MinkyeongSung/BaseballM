@@ -106,7 +106,21 @@ public class TeamDAO {
 
         return teamRespDTO;
     }
-
-
-
 }
+
+//        팀정보 (하나만)
+//        if (input.equals("팀정보")) {
+//            System.out.println("팀 ID를 입력하세요: ");
+//            int teamId = scanner.nextInt();
+//            scanner.nextLine();
+//
+//            TeamRespDTO team = teamDAO.getTeam(teamId);
+//
+//            if (team != null) {
+//                System.out.printf("팀 이름: %s (%s)%n", team.getTeamName(), team.getStadium());
+//                System.out.println(team.getTeamCreatedAt());
+//                System.out.println("-------------------------------");
+//            } else {
+//                System.out.println("팀을 찾을 수 없습니다.");
+//            }
+//        }

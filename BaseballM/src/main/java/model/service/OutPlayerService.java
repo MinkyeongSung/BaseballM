@@ -1,9 +1,15 @@
 
 package model.service;
 
+import dto.OutPlayerRespDTO;
 import model.outplayer.OutPlayerDAO;
-
 import model.player.PlayerDAO;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
 
 //@AllArgsConstructor
 public class OutPlayerService {
@@ -52,6 +58,27 @@ public class OutPlayerService {
     }
 
     public void outPlayerList() {
+        try {
+            List<OutPlayerRespDTO> outPlayerList = outPlayerDAO.outplayerFindByAll();
+            System.out.println("p.id p.name p.position o.reason(사유) o.day(퇴출일)");
+            for (OutPlayerRespDTO outPlayer : outPlayerList) {
+
+                System.out.printf(" " + outPlayer.getPlayerIdx() + "   ");
+                System.out.printf("%s", outPlayer.getPlayerName());
+                System.out.printf("    %s", outPlayer.getPosition());
+                System.out.printf("        %s", outPlayer.getReason());
+
+                LocalDate createdAt = outPlayer.getCreatedAt().toLocalDateTime().toLocalDate();
+                String formattedDate = createdAt.format(DateTimeFormatter.ISO_DATE);
+
+                System.out.printf("     %s", formattedDate);
+                System.out.println("\n----------------------");
+            }
+
+        } catch (Exception e) {
+            System.out.println("퇴출된 선수 목록 조회 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        }
     }
 }
 

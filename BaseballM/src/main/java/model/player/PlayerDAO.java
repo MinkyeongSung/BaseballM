@@ -1,7 +1,7 @@
 package model.player;
 
 import dto.PlayerTeamDTO;
-import dto.PositionResDTO;
+import dto.PositionRespDTO;
 import lombok.Getter;
 
 import java.sql.*;
@@ -89,23 +89,23 @@ public class PlayerDAO {
         return players;
     }
 
-    public List<PositionResDTO> positionList() throws SQLException {
-        List<PositionResDTO> dtos = new ArrayList<>();
+    public List<PositionRespDTO> positionList() throws SQLException {
+        List<PositionRespDTO> dtos = new ArrayList<>();
         String query = "select\n" +
                 "    position,\n" +
-                "    max(if(team_idx =1,name,null)) 'lotte',\n" +
-                "    max(if(team_idx =2,name,null)) 'hanhwa',\n" +
-                "    max(if(team_idx =3,name,null)) 'samsung'\n" +
+                "    max(if(team_idx =1,name,null)) '롯데',\n" +
+                "    max(if(team_idx =2,name,null)) 'LG',\n" +
+                "    max(if(team_idx =3,name,null)) 'NC'\n" +
                 "from player p\n" +
                 "group by position;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
-                    PositionResDTO dto = PositionResDTO.builder()
-                            .playerName1(rs.getString("lotte"))
-                            .playerName2(rs.getString("hanhwa"))
-                            .playerName3(rs.getString("samsung"))
-                            .position(rs.getString("position"))
+                    PositionRespDTO dto = PositionRespDTO.builder()
+                            .playerName1(rs.getString("롯데"))
+                            .playerName2(rs.getString("LG"))
+                            .playerName3(rs.getString("NC"))
+                            .position(rs.getString("포지션"))
                             .build();
                     dtos.add(dto);
                 }
