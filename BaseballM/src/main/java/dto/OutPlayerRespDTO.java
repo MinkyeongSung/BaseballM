@@ -1,25 +1,18 @@
 package dto;
 
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-
 import java.sql.Timestamp;
 
-
-@Getter @Setter @AllArgsConstructor @Builder
-public class PlayerTeamDTO {
-    private int pidx;
-    private int tidx;
+@Getter
+@Setter
+@AllArgsConstructor
+public class OutPlayerRespDTO {
+    private Integer playerIdx;
     private String playerName;
     private String position;
+    private String reason;
     private Timestamp createdAt;
-
-
-    private String teamName;
-    private String stadiumName;
 }
-

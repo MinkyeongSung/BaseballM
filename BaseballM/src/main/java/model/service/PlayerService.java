@@ -2,11 +2,13 @@
 package model.service;
 
 import dto.PlayerTeamDTO;
+import dto.PositionResDTO;
 import dto.TeamRespDTO;
 import model.player.PlayerDAO;
 import model.team.TeamDAO;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 //@AllArgsConstructor
@@ -46,6 +48,23 @@ public class PlayerService {
             }
         } catch (Exception e) {
             System.out.println("선수 목록 조회 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        }
+    }
+
+    public void callpotisionlist() {
+        try {
+            List<PositionResDTO> positionList = playerDAO.positionList();
+
+            for (PositionResDTO dto : positionList) {
+                System.out.println("포지션: " + dto.getPosition());
+                System.out.println("롯데 선수: " + dto.getPlayerName1());
+                System.out.println("LG 선수: " + dto.getPlayerName2());
+                System.out.println("NC 선수: " + dto.getPlayerName3());
+                System.out.println("---------------------------------");
+            }
+        } catch (SQLException e) {
+            System.out.println("데이터베이스에서 포지션별 선수 목록을 가져오는 중 오류가 발생했습니다.");
             e.printStackTrace();
         }
     }

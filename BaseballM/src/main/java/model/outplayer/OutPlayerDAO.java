@@ -1,5 +1,6 @@
 package model.outplayer;
 
+import dto.OutPlayerRespDTO;
 import lombok.Getter;
 
 
@@ -37,19 +38,29 @@ public class OutPlayerDAO {
     }
 
 
-    public List<OutPlayer> outplayerFindByAll() throws SQLException {
-        List<OutPlayer> outplayers = new ArrayList<>();
-        String query = "select p.idx,p.name,p.position,op.reason,op.created_at from player p left outer join out_player op on p.idx = op.player_id";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            try(ResultSet resultSet = statement.executeQuery()){
-                while (resultSet.next()) {
-                    OutPlayer outPlayer = buildOutPlayerFromResultSet(resultSet);
-                    outplayers.add(outPlayer);
-                }
+
+
+    public List<OutPlayerRespDTO> outplayerFindByAll() throws SQLException {
+        List<OutPlayerRespDTO> outPlayerList = new ArrayList<>();
+        String query = "SELECT p.idx, p.name, p.position, op.reason, op.created_at FROM player p LEFT OUTER JOIN out_player op ON p.idx = op.player_id WHERE op.player_id IS NOT NULL";
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int playerIdx = resultSet.getInt("idx");
+                String playerName = resultSet.getString("name");
+                String position = resultSet.getString("position");
+                String reason = resultSet.getString("reason");
+                Timestamp createdAt = resultSet.getTimestamp("created_at");
+
+                OutPlayerRespDTO outPlayer = new OutPlayerRespDTO(playerIdx, playerName, position, reason, createdAt);
+                outPlayerList.add(outPlayer);
             }
         }
-        return outplayers;
+
+        return outPlayerList;
     }
+
     private OutPlayer buildOutPlayerFromResultSet(ResultSet resultSet) throws SQLException {
         int outplayerIdx = resultSet.getInt("idx");
         int outplayerPlayerIdx = resultSet.getInt("player_id");

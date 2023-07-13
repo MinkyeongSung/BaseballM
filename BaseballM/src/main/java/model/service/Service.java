@@ -1,5 +1,7 @@
 package model.service;
 
+import anno.Controller;
+import anno.RequestMapping;
 import db.DBConnection;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,18 +11,24 @@ import model.stadium.Stadium;
 import model.stadium.StadiumDAO;
 import model.team.TeamDAO;
 
+import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
 public class Service {
     private Connection connection;
     private StadiumDAO stadiumDAO;
-    private TeamDAO teamDAO;
-    private PlayerDAO playerDAO;
-    private OutPlayerDAO outPlayerDAO;
+    private TeamDAO teamDAO ;
+    private PlayerDAO playerDAO ;
+    private OutPlayerDAO outPlayerDAO ;
+    private PrintOut printOut;
+    Scanner scanner = new Scanner(System.in);
 
     public Service(Connection connection) {
         this.connection = connection;
@@ -30,43 +38,6 @@ public class Service {
         this.outPlayerDAO = new OutPlayerDAO(connection);
     }
 
-    public void staAdd(String stdiumName) {
-        try {
-            stadiumDAO.createStadium(stdiumName);
-            System.out.println("등록되었습니다.");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void teamAdd(int teamStadiumIdx,String teamName) {
-        try {
-            teamDAO.createTeam(teamStadiumIdx,teamName);
-            System.out.println("등록되었습니다.");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void playerAdd(int teamidx,String playerName,String playerPosition){
-        try {
-            playerDAO.playerInsert(teamidx,playerName,playerPosition);
-            System.out.println("등록 되었습니다");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void stadiumFindByAll(){
-        try {
-            List<Stadium> stadiums = stadiumDAO.getAllStadiums();
-            System.out.println("등록된 야구장 목록:");
-            for (Stadium stadium : stadiums) {
-                System.out.println("야구장 이름: " + stadium.getStadiumName());
-                System.out.println("등록일시: " + stadium.getStadiumCreatedAt());
-                System.out.println("-------------------------");
-            }
-        } catch (SQLException e) {
-            System.out.println("야구장 목록 조회 중 오류가 발생했습니다.");
-            e.printStackTrace();
-        }
-    }
+
 }
 
