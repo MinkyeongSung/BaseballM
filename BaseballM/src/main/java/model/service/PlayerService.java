@@ -1,56 +1,85 @@
 
 package model.service;
 
+import dto.PlayerTeamDTO;
 import dto.TeamRespDTO;
-import lombok.AllArgsConstructor;
-
-import model.outplayer.OutPlayerDAO;
-import model.player.Player;
 import model.player.PlayerDAO;
-import model.stadium.StadiumDAO;
 import model.team.TeamDAO;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.util.List;
 
 //@AllArgsConstructor
 public class PlayerService {
     private PlayerDAO playerDAO;
-    private Connection connection;
-    private TeamDAO teamDAO;
 
-    public PlayerService(PlayerDAO playerDAO, Connection connection) {
+    public PlayerService(PlayerDAO playerDAO) {
         this.playerDAO = playerDAO;
-        this.connection = connection;
+
     }
 
-    // 선수 등록
-    public int registerPlayer(int teamId, String playerName, String position) {
+
+    public int registerPlayer(String paramsString) {
         try {
-            // 팀 정보 가져오기
-            TeamRespDTO team = teamDAO.getTeam(teamId);
+            // 입력값 파싱
+            String playerName = null;
+            String playerPosition = null;
+            int teamId = -1;
 
-            if (team != null) {
-                // 선수 등록
-                Player player = playerDAO.playerInsert(teamId, playerName, position);
+            String[] params = paramsString.split("&");
 
-                if (player != null) {
-                    return 1; // 등록 성공
-                } else {
-                    return 0; // 등록 실패
+            for (String param : params) {
+                String[] keyValue = param.split("=");
+                String key = keyValue[0];
+                String value = keyValue[1];
+
+                if (key.equals("teamId")) {
+                    teamId = Integer.parseInt(value);
+                } else if (key.equals("name")) {
+                    playerName = value;
+                } else if (key.equals("position")) {
+                    playerPosition = value;
                 }
-            } else {
-                System.out.println("팀을 찾을 수 없습니다.");
-                return 0; // 등록 실패
             }
-        } catch (SQLException e) {
-            System.out.println("선수 등록 중 오류가 발생했습니다.");
-            e.printStackTrace();
-            return 0; // 등록 실패
-        }
+            playerDAO.playerInsert(teamId, playerName,playerPosition);
 
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
+    public void playerListByTeamId(String input) {
+        try {
+            // 입력값 파싱
+            int teamId = -1;
+            String[] params = input.split("&");
+
+            for (String param : params) {
+                String[] keyValue = param.split("=");
+                String key = keyValue[0];
+                String value = keyValue[1];
+
+                if (key.equals("teamId")) {
+                    teamId = Integer.parseInt(value);
+                }
+            }
+
+            // 선수 목록 조회 로직
+            List<PlayerTeamDTO> playerList = playerDAO.playerFindByTeamId(teamId);
+
+
+            // 선수 목록 출력
+            for (PlayerTeamDTO player : playerList) {
+                System.out.println("선수 이름: " + player.getPlayerName());
+                System.out.println("포지션: " + player.getPosition());
+                System.out.println("등록일: " + player.getCreatedAt());
+                System.out.println("----------------------");
+            }
+        } catch (Exception e) {
+            System.out.println("선수 목록 조회 중 오류가 발생했습니다.");
+            e.printStackTrace();
+        }
+    }
 }

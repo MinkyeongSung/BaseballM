@@ -1,56 +1,57 @@
 
 package model.service;
 
-import dto.TeamRespDTO;
-import lombok.AllArgsConstructor;
-
 import model.outplayer.OutPlayerDAO;
-import model.player.Player;
-import model.player.PlayerDAO;
-import model.stadium.StadiumDAO;
-import model.team.TeamDAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
+import model.player.PlayerDAO;
 
 //@AllArgsConstructor
 public class OutPlayerService {
     private OutPlayerDAO outPlayerDAO;
-    private Connection connection;
     private PlayerDAO playerDAO;
 
-    public OutPlayerService(OutPlayerDAO outPlayerDAO, Connection connection) {
+    public OutPlayerService(OutPlayerDAO outPlayerDAO, PlayerDAO playerDAO) {
         this.outPlayerDAO = outPlayerDAO;
-        this.connection = connection;
+        this.playerDAO = playerDAO;
     }
 
     // 선수 퇴출 등록
-    public int registerOutPlayer(int playerId, String reason) {
+    public int registerOutPlayer(String paramsString) {
         try {
-            connection.setAutoCommit(false);
+            // 입력값 파싱
+            int playerId = 0;
+            String reason = null;
 
+            String[] params = paramsString.split("&");
+
+            for (String param : params) {
+                String[] keyValue = param.split("=");
+                String key = keyValue[0];
+                String value = keyValue[1];
+
+                if (key.equals("playerId")) {
+                    playerId = Integer.parseInt(value);
+                } else if (key.equals("reason")) {
+                    reason = value;
+                }
+            }
+
+            // 선수 퇴출 로직
             outPlayerDAO.outplayerInsert(playerId, reason);
 
+            // 선수 정보 업데이트
             playerDAO.playerUpdate(playerId);
 
-            connection.commit();
+            System.out.println("선수 퇴출 성공");
             return 1;
         } catch (Exception e) {
+            System.out.println("선수 퇴출 실패");
             e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
             return -1;
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
+
+    public void outPlayerList() {
+    }
 }
+

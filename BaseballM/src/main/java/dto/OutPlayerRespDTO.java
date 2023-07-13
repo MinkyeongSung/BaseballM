@@ -1,7 +1,6 @@
 package dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,7 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 
-public class OutPlayerDTO {
+public class OutPlayerRespDTO {
     private String teamName;
     private String stadium;
     private Timestamp teamCreatedAt;

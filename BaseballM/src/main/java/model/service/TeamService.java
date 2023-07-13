@@ -1,37 +1,64 @@
-
 package model.service;
 
 import dto.TeamRespDTO;
-import lombok.AllArgsConstructor;
 
-import model.outplayer.OutPlayerDAO;
-import model.player.Player;
-import model.player.PlayerDAO;
-import model.stadium.StadiumDAO;
 import model.team.TeamDAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.util.List;
 
-//@AllArgsConstructor
+
 public class TeamService {
     private TeamDAO teamDAO;
-    private Connection connection;
-    public TeamService(TeamDAO teamDAO, Connection connection) {
+
+    public TeamService(TeamDAO teamDAO) {
         this.teamDAO = teamDAO;
-        this.connection = connection;
+
     }
 
     // 팀 등록
-    public int registerTeam(int stadiumId, String teamName) {
+    public String registerTeam(String paramsString) {
         try {
-            teamDAO.createTeam(stadiumId, teamName);
-            return 1;
-        } catch (SQLException e) {
+            String[] params = paramsString.split("&");
+            String stadiumId = null;
+            String teamName = null;
+
+            for (String param : params) {
+                String[] keyValue = param.split("=");
+                String key = keyValue[0];
+                String value = keyValue[1];
+
+                if (key.equals("stadiumId")) {
+                    stadiumId = value;
+                } else if (key.equals("name")) {
+                    teamName = value;
+                }
+            }
+
+            // 팀 등록 로직
+            teamDAO.createTeam(Integer.parseInt(stadiumId), teamName);
+
+
+            return "등록 성공"; // 팀 등록 성공 시 1 반환
+        } catch (Exception e) {
             e.printStackTrace();
-            return -1;
+            return "등록 실패"; // 팀 등록 실패 시 -1 반환
+        }
+    }
+
+    // 팀 목록
+    public void teamList() {
+        try {
+            List<TeamRespDTO> teamList = teamDAO.getTeamList();
+
+            for (TeamRespDTO team : teamList) {
+                System.out.printf("팀 이름: %s", team.getTeamName());
+                System.out.printf("(%s)", team.getStadium());
+                System.out.println(team.getTeamCreatedAt());
+            }
+
+        } catch (Exception e) {
+            System.out.println("팀 목록 조회 중 오류가 발생했습니다.");
+            e.printStackTrace();
         }
     }
 
