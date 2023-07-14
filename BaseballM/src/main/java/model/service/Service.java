@@ -71,7 +71,7 @@ public class Service {
         } catch (SQLException e) {
             System.out.println("선수 등록 중 오류가 발생했습니다.");
             e.printStackTrace();
-            return 0; // 등록 실패
+            return 0; // 등록 실패에엥
         }
 
     }
