@@ -41,7 +41,8 @@ public class PlayerDAO {
     public List<PlayerTeamDTO> playerFindByTeamId(int playerTeamIdx) throws SQLException {
 
         List<PlayerTeamDTO> dtos = new ArrayList<>();
-        String query = "select s.name , t.name, p.*  from player p left outer join team t on p.team_idx = t.idx left outer join stadium s on t.stadium_idx = s.idx where team_idx = ?;";
+        String query = "select s.name , t.name, p.*  from player p left outer join team t on p.team_idx = t.idx" +
+                " left outer join stadium s on t.stadium_idx = s.idx where team_idx = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, playerTeamIdx);
             try (ResultSet rs = statement.executeQuery()) {

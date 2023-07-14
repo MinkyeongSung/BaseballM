@@ -2,11 +2,12 @@ package model.service;
 
 import dto.TeamRespDTO;
 
+import lombok.NoArgsConstructor;
 import model.team.TeamDAO;
 
 import java.util.List;
 
-
+@NoArgsConstructor
 public class TeamService {
     private TeamDAO teamDAO;
 
@@ -16,12 +17,11 @@ public class TeamService {
     }
 
     // 팀 등록
-    public String registerTeam(String teamName,int teamIdx) {
+    public String registerTeam(int teamIdx,String teamName) {
         try {
 
             // 팀 등록 로직
             teamDAO.createTeam(teamIdx, teamName);
-
 
             return "등록 성공"; // 팀 등록 성공 시 1 반환
         } catch (Exception e) {

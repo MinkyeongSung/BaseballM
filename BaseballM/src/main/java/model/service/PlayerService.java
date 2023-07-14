@@ -3,11 +3,13 @@ package model.service;
 
 import dto.PlayerTeamDTO;
 import dto.PositionResDTO;
+import lombok.NoArgsConstructor;
 import model.player.PlayerDAO;
 import java.sql.SQLException;
 import java.util.List;
 
 //@AllArgsConstructor
+@NoArgsConstructor
 public class PlayerService {
     private PlayerDAO playerDAO;
 

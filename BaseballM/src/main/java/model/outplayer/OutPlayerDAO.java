@@ -6,20 +6,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+import lombok.NoArgsConstructor;
+import model.player.Player;
+
+@Getter @NoArgsConstructor
 public class OutPlayerDAO {
     private Connection connection;
-
-
-
-    private PreparedStatement statement;
-
     public OutPlayerDAO(Connection connection){
         this.connection = connection;
     }
 
-    public OutPlayer outplayerInsert(int outplayerPlayerIdx, String outplayerReason) throws SQLException {
-        String sql = "INSERT INTO out_player (player_id, reason, created_at) VALUES (?, ?, now())";
+    public OutPlayer outplayerInsert(int outplayerPlayerIdx,
+                                     String outplayerReason) throws SQLException {
+        String sql = "INSERT INTO out_player (player_id, reason, created_at) VALUES (?, ?, DATE(CURRENT_TIMESTAMP))";
         try (PreparedStatement statement = connection.prepareStatement(sql);) {
             statement.setInt(1, outplayerPlayerIdx);
             statement.setString(2, outplayerReason);
@@ -37,10 +36,9 @@ public class OutPlayerDAO {
 
     public List<OutPlayerRespDTO> outplayerFindByAll() throws SQLException {
         List<OutPlayerRespDTO> outPlayerList = new ArrayList<>();
-        String query = "SELECT p.idx, p.name, p.position, op.reason, op.created_at FROM player p LEFT OUTER JOIN out_player op ON p.idx = op.player_id WHERE op.player_id IS NOT NULL";
+        String query = "SELECT p.idx, p.name, p.position, op.reason, op.created_at FROM player p LEFT OUTER JOIN out_player op  ON p.idx = op.player_id ";
         try (PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
-
             while (resultSet.next()) {
                 int playerIdx = resultSet.getInt("idx");
                 String playerName = resultSet.getString("name");
@@ -56,17 +54,4 @@ public class OutPlayerDAO {
         return outPlayerList;
     }
 
-    private OutPlayer buildOutPlayerFromResultSet(ResultSet resultSet) throws SQLException {
-        int outplayerIdx = resultSet.getInt("idx");
-        int outplayerPlayerIdx = resultSet.getInt("player_id");
-        String outplayerReason = resultSet.getString("reason");
-        Timestamp outplayerCreatedAt = resultSet.getTimestamp("created_at");
-
-        return OutPlayer.builder()
-                .outplayerIdx(outplayerIdx)
-                .outplayerPlayerIdx(outplayerPlayerIdx)
-                .outplayerReason(outplayerReason)
-                .outplayerCreatedAt(outplayerCreatedAt)
-                .build();
-    }
 }
