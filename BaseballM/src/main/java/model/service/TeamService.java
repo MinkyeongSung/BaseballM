@@ -1,5 +1,6 @@
 package model.service;
 
+
 import dto.TeamRespDTO;
 
 import lombok.NoArgsConstructor;
@@ -16,7 +17,8 @@ public class TeamService {
 
     }
 
-    // 팀 등록
+    // 팀 등록 3
+
     public String registerTeam(int teamIdx,String teamName) {
         try {
 
@@ -30,7 +32,7 @@ public class TeamService {
         }
     }
 
-    // 팀 목록
+    // 팀 목록 4
     public void teamList() {
         try {
             List<TeamRespDTO> teamList = teamDAO.getTeamList();

@@ -15,6 +15,7 @@ public class PlayerDAO {
         this.connection = connection;
     }
 
+
     public Player playerInsert(int playerTeamIdx, String playerName, String playerPosition) throws SQLException {
         String sql = "INSERT INTO player (team_idx,name, position, created_at) VALUES (?, ?, ?, now())";
         try(PreparedStatement statement = connection.prepareStatement(sql);){

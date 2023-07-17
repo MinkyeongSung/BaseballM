@@ -1,5 +1,6 @@
 package model.service;
 
+
 import lombok.NoArgsConstructor;
 import model.stadium.StadiumDAO;
 import model.stadium.Stadium;
@@ -16,7 +17,8 @@ public class StadiumService {
         this.stadiumDAO = stadiumDAO;
     }
 
-    // 야구장 등록
+    // 야구장 등록1
+
     public int registerStadium(String input) {
         try {
             // 야구장 등록 로직

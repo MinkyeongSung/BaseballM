@@ -2,16 +2,13 @@
 package model.service;
 
 
+
 import dto.OutPlayerRespDTO;
 import lombok.NoArgsConstructor;
 import model.outplayer.OutPlayerDAO;
 
 import model.player.PlayerDAO;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 //@AllArgsConstructor
@@ -27,6 +24,7 @@ public class OutPlayerService {
     }
 
     // 선수 퇴출 등록
+
     public int registerOutPlayer(int playerId, String reason) {
         try {
             // 입력값 파싱
@@ -62,17 +60,6 @@ public class OutPlayerService {
                 }else {
                     System.out.println("     "+nullCheck);
                 }
-
-
-
-//                LocalDate createdAt = LocalDate.parse(outPlayer.getCreatedAt().toString());
-//                String date = createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-//                LocalDate createdAt = outPlayer.getCreatedAt().toLocalDateTime().toLocalDate();
-//                String formattedDate = createdAt.format(DateTimeFormatter.ISO_DATE);
-//
-//                System.out.printf("     %s", date);
-
-//                System.out.printf("     %s", outPlayer.getCreatedAt());
 
                 System.out.println("\n----------------------");
             }

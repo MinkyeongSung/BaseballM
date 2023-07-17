@@ -71,4 +71,15 @@ public class PrintOut {
         System.out.println("또는 첫 화면에서 '퇴출등록?playerId=플레이어번호&reason=사유'를 입력하셔서 퇴출 할 수 있습니다.");
         System.out.println("Enter키를 입력하시면 메인화면으로 돌아갑니다.");
     }
+    public void select1(){
+        System.out.println("원하시는 항목을 선택하시오.");
+        System.out.println("1.등록");
+        System.out.println("2.설명");
+    }
+
+    public void select2(){
+        System.out.println("원하시는 항목을 선택하시오.");
+        System.out.println("1.불러오기");
+        System.out.println("2.설명");
+    }
 }

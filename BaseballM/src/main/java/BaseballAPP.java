@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public class BaseballAPP {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Connection connection = DBConnection.getInstance();
         Scanner scanner = new Scanner(System.in);
@@ -15,6 +15,7 @@ public class BaseballAPP {
         printOut.mainPrint();
         String input = scanner.nextLine();
         service.run(input);
+
 
 
     }

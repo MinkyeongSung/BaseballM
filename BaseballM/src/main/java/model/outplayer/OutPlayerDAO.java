@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.NoArgsConstructor;
-import model.player.Player;
 
 @Getter @NoArgsConstructor
 public class OutPlayerDAO {
