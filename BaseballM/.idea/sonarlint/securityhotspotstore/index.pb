@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 \
 ,src/main/java/model/outplayer/OutPlayer.java,a\e\ae22001fc1e601acb01e5b0c04e9723b907a7ad3
 X
@@ -15,3 +16,7 @@ R
 "src/main/java/dto/TeamRespDTO.java,0\2\023e36691d7eba95b055832fad9dd862e2c4ef11
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
+=======
+X
+(BaseballM/src/main/java/BaseballAPP.java,a\e\ae21c6d4988edd1aa1dd2fc616b57f8f20b64e4e
+>>>>>>> 0e01057d44122cd57d9d82809b2060011833a87b

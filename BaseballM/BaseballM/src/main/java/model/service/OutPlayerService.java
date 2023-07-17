@@ -55,11 +55,15 @@ public class OutPlayerService {
                 System.out.printf("%s", outPlayer.getPlayerName());
                 System.out.printf("    %s", outPlayer.getPosition());
                 System.out.printf("        %s", outPlayer.getReason());
+<<<<<<< HEAD
 
                 LocalDate createdAt = outPlayer.getCreatedAt().toLocalDateTime().toLocalDate();
                 String formattedDate = createdAt.format(DateTimeFormatter.ISO_DATE);
 
                 System.out.printf("     %s", formattedDate);
+=======
+                System.out.printf("     %s", outPlayer.getCreatedAt());
+>>>>>>> 0e01057d44122cd57d9d82809b2060011833a87b
                 System.out.println("\n----------------------");
             }
 

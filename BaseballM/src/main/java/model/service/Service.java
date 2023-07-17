@@ -44,12 +44,27 @@ public class Service {
         this.outPlayerService = new OutPlayerService(outPlayerDAO, playerDAO);
         this.printOut = new PrintOut();
 
+<<<<<<< HEAD
     }
 
     public void run(String input) {
         while (true) {
             Parse parse = new Parse();
             NoneParse noneParse = new NoneParse(stadiumService, teamService, playerService, outPlayerService);
+=======
+    public Service(StadiumDAO stadiumDAO, TeamDAO teamDAO, PlayerDAO playerDAO) {
+        this.stadiumDAO = stadiumDAO;
+        this.teamDAO = teamDAO;
+        this.playerDAO = playerDAO;
+    }
+
+    public Service(StadiumDAO stadiumDAO) {
+        this.stadiumDAO = stadiumDAO;
+    }
+
+    public int registerSadium(String name) {
+        try {
+>>>>>>> 0e01057d44122cd57d9d82809b2060011833a87b
 
             try {
                 if (input.contains("?")) {
@@ -62,6 +77,7 @@ public class Service {
                 System.err.println("오류가 발생했습니다.");
                 e.printStackTrace();
             }
+<<<<<<< HEAD
             if (parse.getAction().equals("1") || parse.getAction().equals("야구장등록")) {
                 if (parse.getList() != null) {
                     parse.parsingByName(parse.getList());
@@ -70,6 +86,13 @@ public class Service {
                 } else {
                     noneParse.noneParsingByName();
                 }
+=======
+        } catch (SQLException e) {
+            System.out.println("선수 등록 중 오류가 발생했습니다.");
+            e.printStackTrace();
+            return 0; // 등록 실패에엥
+        }
+>>>>>>> 0e01057d44122cd57d9d82809b2060011833a87b
 
             } else if (parse.getAction().equals("2") || parse.getAction().equals("야구장목록")) {
                 stadiumService.stadiumList();
