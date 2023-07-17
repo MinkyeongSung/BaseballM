@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @AllArgsConstructor
-
+@Builder
 
 public class TeamRespDTO {
     private String teamName;

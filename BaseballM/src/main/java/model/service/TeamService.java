@@ -2,11 +2,12 @@ package model.service;
 
 import dto.TeamRespDTO;
 
+import lombok.NoArgsConstructor;
 import model.team.TeamDAO;
 
 import java.util.List;
 
-
+@NoArgsConstructor
 public class TeamService {
     private TeamDAO teamDAO;
 
@@ -16,27 +17,11 @@ public class TeamService {
     }
 
     // 팀 등록
-    public String registerTeam(String paramsString) {
+    public String registerTeam(int teamIdx,String teamName) {
         try {
-            String[] params = paramsString.split("&");
-            String stadiumId = null;
-            String teamName = null;
-
-            for (String param : params) {
-                String[] keyValue = param.split("=");
-                String key = keyValue[0];
-                String value = keyValue[1];
-
-                if (key.equals("stadiumId")) {
-                    stadiumId = value;
-                } else if (key.equals("name")) {
-                    teamName = value;
-                }
-            }
 
             // 팀 등록 로직
-            teamDAO.createTeam(Integer.parseInt(stadiumId), teamName);
-
+            teamDAO.createTeam(teamIdx, teamName);
 
             return "등록 성공"; // 팀 등록 성공 시 1 반환
         } catch (Exception e) {

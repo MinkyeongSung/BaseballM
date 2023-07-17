@@ -1,6 +1,6 @@
 package model.stadium;
 
-import lombok.Builder;
+
 import lombok.Getter;
 
 import java.sql.*;
@@ -24,7 +24,6 @@ public class StadiumDAO {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, stdiumName);
             int result = statement.executeUpdate();
-            System.out.println("결과 : "+ result);
         }
 
     }
@@ -36,17 +35,19 @@ public class StadiumDAO {
 
     public List<Stadium> getAllStadiums() throws SQLException {
         List<Stadium> stadiums = new ArrayList<>();
-        String query = "SELECT * FROM stadium";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Stadium stadium = buildStadiumFromResultSet(resultSet);
+        String sql = "SELECT * FROM stadium";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Stadium stadium = buildStadiumFromResultSet(rs);
                     stadiums.add(stadium);
                 }
             }
+            return stadiums;
         }
-        return stadiums;
     }
+
+
 
     private Stadium buildStadiumFromResultSet(ResultSet resultSet) throws SQLException {
         String stadiumName = resultSet.getString("name");

@@ -1,20 +1,25 @@
 
 package model.service;
 
+
 import dto.OutPlayerRespDTO;
+import lombok.NoArgsConstructor;
 import model.outplayer.OutPlayerDAO;
+
 import model.player.PlayerDAO;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
 //@AllArgsConstructor
+@NoArgsConstructor
 public class OutPlayerService {
     private OutPlayerDAO outPlayerDAO;
     private PlayerDAO playerDAO;
+
 
     public OutPlayerService(OutPlayerDAO outPlayerDAO, PlayerDAO playerDAO) {
         this.outPlayerDAO = outPlayerDAO;
@@ -22,25 +27,9 @@ public class OutPlayerService {
     }
 
     // 선수 퇴출 등록
-    public int registerOutPlayer(String paramsString) {
+    public int registerOutPlayer(int playerId, String reason) {
         try {
             // 입력값 파싱
-            int playerId = 0;
-            String reason = null;
-
-            String[] params = paramsString.split("&");
-
-            for (String param : params) {
-                String[] keyValue = param.split("=");
-                String key = keyValue[0];
-                String value = keyValue[1];
-
-                if (key.equals("playerId")) {
-                    playerId = Integer.parseInt(value);
-                } else if (key.equals("reason")) {
-                    reason = value;
-                }
-            }
 
             // 선수 퇴출 로직
             outPlayerDAO.outplayerInsert(playerId, reason);
@@ -54,6 +43,7 @@ public class OutPlayerService {
             System.out.println("선수 퇴출 실패");
             e.printStackTrace();
             return -1;
+
         }
     }
 
@@ -62,23 +52,36 @@ public class OutPlayerService {
             List<OutPlayerRespDTO> outPlayerList = outPlayerDAO.outplayerFindByAll();
             System.out.println("p.id p.name p.position o.reason(사유) o.day(퇴출일)");
             for (OutPlayerRespDTO outPlayer : outPlayerList) {
-
                 System.out.printf(" " + outPlayer.getPlayerIdx() + "   ");
                 System.out.printf("%s", outPlayer.getPlayerName());
                 System.out.printf("    %s", outPlayer.getPosition());
                 System.out.printf("        %s", outPlayer.getReason());
+                String nullCheck = String.valueOf(outPlayer.getCreatedAt());
+                if (!nullCheck.equals("null")){
+                    System.out.println("     "+nullCheck.substring(0,10));
+                }else {
+                    System.out.println("     "+nullCheck);
+                }
 
-                LocalDate createdAt = outPlayer.getCreatedAt().toLocalDateTime().toLocalDate();
-                String formattedDate = createdAt.format(DateTimeFormatter.ISO_DATE);
 
-                System.out.printf("     %s", formattedDate);
+
+//                LocalDate createdAt = LocalDate.parse(outPlayer.getCreatedAt().toString());
+//                String date = createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+//                LocalDate createdAt = outPlayer.getCreatedAt().toLocalDateTime().toLocalDate();
+//                String formattedDate = createdAt.format(DateTimeFormatter.ISO_DATE);
+//
+//                System.out.printf("     %s", date);
+
+//                System.out.printf("     %s", outPlayer.getCreatedAt());
+
                 System.out.println("\n----------------------");
             }
-
         } catch (Exception e) {
             System.out.println("퇴출된 선수 목록 조회 중 오류가 발생했습니다.");
             e.printStackTrace();
         }
     }
+
+
 }
 

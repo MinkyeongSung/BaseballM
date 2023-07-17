@@ -4,10 +4,7 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
-@Getter
-@Setter
-@ToString
-
+@Getter @Setter @ToString
 public class Player {
     private int playerIdx;
     private int playerTeamIdx;
@@ -16,12 +13,13 @@ public class Player {
     private Timestamp playerCreatedAt;
 
     @Builder
-    public Player(int playerIdx, int playerTeamIdx, String playerName, String playerPosition,Timestamp playerCreatedAt) {
+    public Player(int playerIdx, int playerTeamIdx, String playerName,
+                  String playerPosition,Timestamp playerCreatedAt) {
         this.playerIdx = playerIdx;
         this.playerTeamIdx = playerTeamIdx;
         this.playerName = playerName;
         this.playerPosition = playerPosition;
-
+        this.playerCreatedAt = playerCreatedAt;
     }
-}
 
+}

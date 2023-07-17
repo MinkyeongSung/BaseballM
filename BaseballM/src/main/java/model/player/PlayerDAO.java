@@ -1,7 +1,7 @@
 package model.player;
 
 import dto.PlayerTeamDTO;
-import dto.PositionRespDTO;
+import dto.PositionResDTO;
 import lombok.Getter;
 
 import java.sql.*;
@@ -17,7 +17,7 @@ public class PlayerDAO {
 
     public Player playerInsert(int playerTeamIdx, String playerName, String playerPosition) throws SQLException {
         String sql = "INSERT INTO player (team_idx,name, position, created_at) VALUES (?, ?, ?, now())";
-        try(PreparedStatement statement = connection.prepareStatement(sql)){
+        try(PreparedStatement statement = connection.prepareStatement(sql);){
             statement.setInt(1,playerTeamIdx);
             statement.setString(2,playerName);
             statement.setString(3,playerPosition);
@@ -37,24 +37,12 @@ public class PlayerDAO {
         }
     }
 
-//    public void updatePlayerTeamId(int playerId, Integer teamId) throws SQLException {
-//        String sql = "UPDATE player SET team_id = ? WHERE id = ?";
-//        try (PreparedStatement statement = connection.prepareStatement(sql);) {
-//            if (teamId == null) {
-//                statement.setNull(1, Types.INTEGER);
-//            } else {
-//                statement.setInt(1, teamId);
-//            }
-//            statement.setInt(2, playerId);
-//            statement.executeUpdate();
-//        }
-//    }
-
 
     public List<PlayerTeamDTO> playerFindByTeamId(int playerTeamIdx) throws SQLException {
 
         List<PlayerTeamDTO> dtos = new ArrayList<>();
-        String query = "select s.name , t.name, p.*  from player p left outer join team t on p.team_idx = t.idx left outer join stadium s on t.stadium_idx = s.idx where team_idx = ?;";
+        String query = "select s.name , t.name, p.*  from player p left outer join team t on p.team_idx = t.idx" +
+                " left outer join stadium s on t.stadium_idx = s.idx where team_idx = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, playerTeamIdx);
             try (ResultSet rs = statement.executeQuery()) {
@@ -89,23 +77,22 @@ public class PlayerDAO {
         return players;
     }
 
-    public List<PositionRespDTO> positionList() throws SQLException {
-        List<PositionRespDTO> dtos = new ArrayList<>();
+    public List<PositionResDTO> positionList() throws SQLException {
+        List<PositionResDTO> dtos = new ArrayList<>();
         String query = "select\n" +
                 "    position,\n" +
-                "    max(if(team_idx =1,name,null)) '롯데',\n" +
-                "    max(if(team_idx =2,name,null)) 'LG',\n" +
-                "    max(if(team_idx =3,name,null)) 'NC'\n" +
+                "    max(if(team_idx =1,name,null)) 'lotte',\n" +
+                "    max(if(team_idx =2,name,null)) 'hanhwa',\n" +
+                "    max(if(team_idx =3,name,null)) 'samsung'\n" +
                 "from player p\n" +
                 "group by position;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             try (ResultSet rs = statement.executeQuery()) {
-
                 while (rs.next()) {
-                    PositionRespDTO dto = PositionRespDTO.builder()
-                            .playerName1(rs.getString("롯데"))
-                            .playerName2(rs.getString("LG"))
-                            .playerName3(rs.getString("NC"))
+                    PositionResDTO dto = PositionResDTO.builder()
+                            .playerName1(rs.getString("lotte"))
+                            .playerName2(rs.getString("hanhwa"))
+                            .playerName3(rs.getString("samsung"))
                             .position(rs.getString("position"))
                             .build();
                     dtos.add(dto);

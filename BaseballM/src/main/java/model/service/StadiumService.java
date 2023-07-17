@@ -1,5 +1,6 @@
 package model.service;
 
+import lombok.NoArgsConstructor;
 import model.stadium.StadiumDAO;
 import model.stadium.Stadium;
 
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 //@AllArgsConstructor
+@NoArgsConstructor
 public class StadiumService {
     private StadiumDAO stadiumDAO;
 
@@ -17,22 +19,9 @@ public class StadiumService {
     // 야구장 등록
     public int registerStadium(String input) {
         try {
-            // 입력값 파싱
-            String name = null;
-            String[] params = input.split("&");
-
-            for (String param : params) {
-                String[] keyValue = param.split("=");
-                String key = keyValue[0];
-                String value = keyValue[1];
-
-                if (key.equals("name")) {
-                    name = value;
-                }
-            }
-
             // 야구장 등록 로직
-            stadiumDAO.createStadium(name);
+            stadiumDAO.createStadium(input);
+            System.out.println("야구장이 등록 되었습니다");
             return 1;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,4 +44,6 @@ public class StadiumService {
             e.printStackTrace();
         }
     }
+
+
 }
